@@ -2,11 +2,52 @@ import { GraphQLServer } from "graphql-yoga";
 
 // Scalar types - String, Boolean, Int, Float, ID
 
+// Demo user data
+const users = [
+  {
+    id: "1",
+    name: "Andrew",
+    email: "andrew@example.com",
+    age: 27
+  },
+  {
+    id: "2",
+    name: "Sarah",
+    email: "sarah@example.com"
+  },
+  {
+    id: "3",
+    name: "Mike",
+    email: "mike@example.com"
+  }
+];
+
+const posts = [
+  {
+    id: "10",
+    title: "GraphQL 101",
+    body: "This is how to use GraphQL...",
+    published: true
+  },
+  {
+    id: "11",
+    title: "GraphQL 201",
+    body: "This is an advanced GraphQL post...",
+    published: false
+  },
+  {
+    id: "12",
+    title: "Programming Music",
+    body: "",
+    published: false
+  }
+];
+
 // Type definitions (schema)
 const typeDefs = `
     type Query {
-        greeting(name: String, position: String): String!
-        add(a: Float!, b: Float!): Float!
+        users(query: String): [User!]!
+        posts(query: String): [Post!]!
         me: User!
         post: Post!
     }
@@ -29,15 +70,29 @@ const typeDefs = `
 // Resolvers
 const resolvers = {
   Query: {
-    greeting(parent, args, ctx, info) {
-      if (args.name && args.position) {
-        return `Hello, ${args.name}! You are my favoriate ${args.position}.`;
-      } else {
-        return "Hello!";
+    users(parent, args, ctx, info) {
+      if (!args.query) {
+        return users;
       }
+
+      return users.filter(user => {
+        return user.name.toLowerCase().includes(args.query.toLowerCase());
+      });
     },
-    add(parent, args, ctx, info) {
-      return args.a + args.b;
+    posts(parent, args, ctx, info) {
+      if (!args.query) {
+        return posts;
+      }
+
+      return posts.filter(post => {
+        const isTitleMatch = post.title
+          .toLowerCase()
+          .includes(args.query.toLowerCase());
+        const isBodyMatch = post.body
+          .toLowerCase()
+          .includes(args.query.toLowerCase());
+        return isTitleMatch || isBodyMatch;
+      });
     },
     me() {
       return {
