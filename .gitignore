@@ -106,3 +106,5 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 graphql-basics/.DS_Store
+
+graphql-basics/src/.DS_Store
