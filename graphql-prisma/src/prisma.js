@@ -7,22 +7,6 @@ const prisma = new Prisma({
 
 // prisma.query prisma.mutation prisma.subscription prisma.exists
 
-prisma.query.users(null, "{ id name posts { id title } }").then(data => {
-  console.log(JSON.stringify(data, undefined, 2));
-});
-
-prisma.query.comments(null, "{ id text author { id name } }").then(data => {
-  console.log(JSON.stringify(data, undefined, 2));
-});
-import { Prisma } from "prisma-binding";
-
-const prisma = new Prisma({
-  typeDefs: "src/generated/prisma.graphql",
-  endpoint: "http://localhost:4466"
-});
-
-// prisma.query prisma.mutation prisma.subscription prisma.exists
-
 const createPostForUser = async (authorId, data) => {
   const userExists = await prisma.exists.User({ id: authorId });
 
