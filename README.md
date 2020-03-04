@@ -13,3 +13,4 @@ CLI Commands
 2. `prisma init prisma`
 3. `docker-compose up -d`
 4. `prisma deploy`
+5. `npm run get-schema`
