@@ -14,3 +14,10 @@ CLI Commands
 3. `docker-compose up -d`
 4. `prisma deploy`
 5. `npm run get-schema`
+
+Deploying to dev and prod
+
+1. dev - `prisma deploy -e ../config/dev.env`
+1. prod
+   a. `prisma login`
+   b. `prisma deploy -e ../config/prod.env`
