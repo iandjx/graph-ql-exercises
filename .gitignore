@@ -108,3 +108,5 @@ dist
 graphql-basics/.DS_Store
 
 graphql-basics/src/.DS_Store
+
+.DS_Store
